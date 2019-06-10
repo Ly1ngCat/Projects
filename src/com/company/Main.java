@@ -1,21 +1,13 @@
 package com.company;
-import org.jsoup.Connection;
 import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
-import org.jsoup.select.Elements;
 
 import java.io.*;
-import java.net.URI;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.lang.annotation.ElementType;
+import java.util.*;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.http.HttpRequest;
 
 
 public abstract class Main {
@@ -42,9 +34,22 @@ public abstract class Main {
             out.close();
             String text = document.text();
             String [] words = text.split(" ");
-            System.out.println(Arrays.toString(words));
+//            System.out.println(Arrays.toString(words));
 
+            text = text.toLowerCase();
+            text = text.replaceAll("\\s", " ");
 
+            Map<String, Integer> map = new HashMap<>();
+            for(String s: text.split(" ")) {
+                if(map.containsKey(s)) {
+                    map.put(s, map.get(s) + 1);
+                }
+                else {
+                    map.put(s, 1);
+                }
+            }
+            map.remove("");
+            System.out.println(map);
 
 
         } catch (IllegalArgumentException | UnknownHostException | MalformedURLException e) {
