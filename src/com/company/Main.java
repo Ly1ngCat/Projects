@@ -28,24 +28,24 @@ public abstract class Main {
         try {
             Document document = Jsoup.connect(url).get().ownerDocument();
             Charset charset = document.charset();
-            String html = Jsoup.connect(url).get().outerHtml();
-            Writer out = new BufferedWriter( new OutputStreamWriter(new FileOutputStream("site.html"),charset));
-            out.write(html);
-            out.close();
-            String text = document.text();
-            String [] words = text.split(" ");
-//            System.out.println(Arrays.toString(words));
 
+            String html = Jsoup.connect(url).get().outerHtml();
+            Writer writer = new BufferedWriter( new OutputStreamWriter(new FileOutputStream("site.html"),charset));
+            writer.write(html);
+            writer.close();
+
+            String text = "asdasdas? sadsa: sadasdasdasd\" asdasda; asdasd?? asdasdas";
             text = text.toLowerCase();
-            text = text.replaceAll("\\s", " ");
+            text = text.replaceAll("[-\r\n\t,;.?!:\\[\\]()\"]", " ");
+
 
             Map<String, Integer> map = new HashMap<>();
-            for(String s: text.split(" ")) {
-                if(map.containsKey(s)) {
-                    map.put(s, map.get(s) + 1);
+            for(String word: text.split(" ")) {
+                if(map.containsKey(word)) {
+                    map.put(word, map.get(word) + 1);
                 }
                 else {
-                    map.put(s, 1);
+                    map.put(word, 1);
                 }
             }
             map.remove("");
